@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kiroku</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <main class="phone" aria-label="服ログアプリのモック">
+        <section class="screen screen-register active" data-screen="register">
+          <header class="screen-header">
+            <div>
+              <p class="eyebrow">Kiroku</p>
+              <h1>登録</h1>
+            </div>
+          </header>
+
+          <form class="entry-card" id="entryForm">
+            <div class="segmented" role="tablist" aria-label="登録タイプ">
+              <button class="selected" type="button" data-entry-type="purchased">買った</button>
+              <button type="button" data-entry-type="want">買う</button>
+            </div>
+
+            <label class="image-picker">
+              <input id="imageInput" type="file" accept="image/*" />
+              <span class="image-preview" id="imagePreview"></span>
+              <span class="image-copy">
+                <strong>商品画像</strong>
+                <small>画像だけ先に残して、名前やサイズはあとでOK</small>
+              </span>
+            </label>
+
+            <div class="field-grid">
+              <label>
+                <span>URL <em>スキップ可</em></span>
+                <input id="urlField" type="url" placeholder="https://..." />
+              </label>
+              <label>
+                <span>ブランド <em>スキップ可</em></span>
+                <input id="brandField" type="text" placeholder="Bibiy" />
+              </label>
+              <label>
+                <span>商品名 <em>スキップ可</em></span>
+                <input id="nameField" type="text" placeholder="lace hoodie" />
+              </label>
+              <label>
+                <span>サイズ <em>空欄でOK</em></span>
+                <input id="sizeField" type="text" placeholder="わかる時だけ" />
+              </label>
+              <label class="price-field">
+                <span>値段 <em>スキップ可</em></span>
+                <input id="priceField" type="text" inputmode="numeric" placeholder="17800" />
+              </label>
+              <label>
+                <span>シーズン</span>
+                <input id="seasonField" type="text" value="2026SS" />
+              </label>
+              <label class="sns-field">
+                <span>SNSアカウント <em>まとめ画像用</em></span>
+                <input id="snsField" type="text" placeholder="@kiroku_girl" />
+              </label>
+              <label class="reminder-field">
+                <span>リマインド</span>
+                <input id="reminderField" type="datetime-local" />
+              </label>
+              <label class="memo-field">
+                <span>メモ</span>
+                <textarea id="memoField" rows="3" placeholder="発売日、迷っている理由、着たい予定など"></textarea>
+              </label>
+            </div>
+            <p class="form-note" id="formNote">画像だけでも保存できます。空欄はあとで埋める前提で大丈夫。</p>
+
+            <button class="primary-button" type="submit">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+              記録する
+            </button>
+          </form>
+        </section>
+
+        <section class="screen" data-screen="want">
+          <header class="screen-header">
+            <div>
+              <p class="eyebrow">Release Alert</p>
+              <h1>買うもの</h1>
+            </div>
+            <button class="icon-button" type="button" data-jump="register" aria-label="登録へ">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </button>
+          </header>
+          <div id="wantList"></div>
+          <section class="want-calendar" id="wantCalendar" aria-label="購入予定カレンダー"></section>
+        </section>
+
+        <section class="screen screen-summary" data-screen="summary">
+          <div class="summary-carousel" id="summaryCarousel" aria-label="購入品まとめ"></div>
+        </section>
+
+        <div class="summary-tools" id="summaryTools" aria-label="まとめ操作">
+          <button class="summary-export-button" id="summaryExportButton" type="button" aria-label="投稿用画像を作成">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v12" />
+              <path d="M7 10l5 5 5-5" />
+              <path d="M5 21h14" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="season-wheel" id="seasonWheel" aria-hidden="true">
+          <button class="season-wheel-backdrop" id="seasonWheelClose" type="button" aria-label="閉じる"></button>
+          <div class="season-wheel-panel" role="dialog" aria-label="シーズンを選択">
+            <div class="wheel-highlight" aria-hidden="true"></div>
+            <div class="wheel-options" id="seasonWheelOptions"></div>
+          </div>
+        </div>
+
+        <nav class="bottom-nav" aria-label="画面切り替え">
+          <button class="active" type="button" data-nav="register">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+            <span>登録</span>
+          </button>
+          <button type="button" data-nav="want">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 8h10l1 12H6z" />
+              <path d="M9 8a3 3 0 0 1 6 0" />
+            </svg>
+            <span>買う</span>
+          </button>
+          <button type="button" data-nav="summary">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5h7v7H4zM13 5h7v5h-7zM13 12h7v7h-7zM4 14h7v5H4z" />
+            </svg>
+            <span>まとめ</span>
+          </button>
+        </nav>
+
+        <button class="summary-nav-handle" id="summaryNavHandle" type="button" aria-label="画面切り替えを表示">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 14l5-5 5 5" />
+          </svg>
+        </button>
+
+        <div class="share-nudge" id="shareNudge" role="status" aria-live="polite">
+          <span id="shareNudgeText">右上の保存ボタンで投稿用画像を作れます</span>
+          <button id="nudgeExportButton" type="button">作成</button>
+        </div>
+      </main>
+    </div>
+
+    <dialog class="detail-sheet" id="detailSheet">
+      <form method="dialog">
+        <button class="sheet-close" value="cancel" aria-label="閉じる">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </form>
+      <div class="sheet-image" id="sheetImage"></div>
+      <div class="sheet-body">
+        <p class="eyebrow" id="sheetType"></p>
+        <h2 id="sheetTitle"></h2>
+        <dl class="meta-list" id="sheetMeta"></dl>
+        <p class="sheet-memo" id="sheetMemo"></p>
+        <div class="sheet-actions">
+          <button class="secondary-button" id="openLinkButton" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1" />
+              <path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1" />
+            </svg>
+            リンク
+          </button>
+          <button class="secondary-button" id="editDetailButton" type="button">編集</button>
+        </div>
+        <div class="detail-edit-panel" id="detailEditPanel">
+          <label>
+            <span>URL <em>スキップ可</em></span>
+            <input id="editUrlField" type="url" placeholder="https://..." />
+          </label>
+          <label>
+            <span>ブランド <em>スキップ可</em></span>
+            <input id="editBrandField" type="text" />
+          </label>
+          <label>
+            <span>商品名 <em>スキップ可</em></span>
+            <input id="editNameField" type="text" />
+          </label>
+          <label>
+            <span>サイズ <em>空欄でOK</em></span>
+            <input id="editSizeField" type="text" />
+          </label>
+          <label class="edit-price-field" id="editPriceWrap">
+            <span>値段 <em>スキップ可</em></span>
+            <input id="editPriceField" type="text" inputmode="numeric" />
+          </label>
+          <label>
+            <span>シーズン</span>
+            <input id="editSeasonField" type="text" />
+          </label>
+          <label class="edit-reminder-field" id="sheetReminderWrap">
+            <span>リマインド</span>
+            <input id="sheetReminder" type="datetime-local" />
+          </label>
+          <label class="edit-memo-field">
+            <span>メモ</span>
+            <textarea id="editMemoField" rows="3"></textarea>
+          </label>
+          <div class="sheet-actions">
+            <button class="secondary-button" id="cancelEditButton" type="button">キャンセル</button>
+            <button class="primary-button" id="saveReminderButton" type="button">保存</button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="export-sheet" id="exportSheet">
+      <form method="dialog">
+        <button class="sheet-close" value="cancel" aria-label="閉じる">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </form>
+      <img id="exportPreview" alt="購入品まとめの保存画像" />
+      <div class="export-actions">
+        <button class="secondary-button" id="closeExportButton" type="button">閉じる</button>
+        <button class="primary-button" id="saveExportButton" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3v12" />
+            <path d="M7 10l5 5 5-5" />
+            <path d="M5 21h14" />
+          </svg>
+          保存
+        </button>
+      </div>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
