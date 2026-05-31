@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ItemType {
+  purchased
+  want
+}
+
+enum SeasonCode {
+  SS
+  AW
+}
+
+model Item {
+  id          String     @id @default(cuid())
+  type        ItemType
+  imagePath   String?
+  url         String?
+  brand       String?
+  name        String?
+  size        String?
+  price       Int?
+  seasonYear  Int
+  seasonCode  SeasonCode
+  memo        String?
+  reminderAt  DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
