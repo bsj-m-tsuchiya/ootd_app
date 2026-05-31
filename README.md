@@ -4,7 +4,21 @@
 
 ## 開き方
 
-`index.html` をブラウザで開くと動きます。登録、買うもの、購入品まとめの3画面を切り替えられます。
+DockerでNext.jsとPostgreSQLを起動します。
+
+```bash
+docker compose up --build
+```
+
+アプリは `http://localhost:3000` で開きます。
+
+DBの中身を見るときは、別ターミナルでPrisma Studioを起動します。
+
+```bash
+docker compose exec web npm run prisma:studio
+```
+
+Prisma Studioは `http://localhost:5555` で開きます。
 
 ## 今回の設計メモ
 
