@@ -28,6 +28,7 @@ model Item {
   price       Int?
   seasonYear  Int
   seasonCode  SeasonCode
+  purchaseMonth Int?
   memo        String?
   reminderAt  DateTime?
   createdAt   DateTime   @default(now())

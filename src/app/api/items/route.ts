@@ -11,6 +11,7 @@ type ItemInput = {
   price?: number | string | null;
   seasonYear?: number;
   seasonCode?: "SS" | "AW";
+  purchaseMonth?: number | null;
   memo?: string;
   reminderAt?: string | null;
 };
@@ -31,6 +32,7 @@ function normalizeItem(input: ItemInput) {
     price,
     seasonYear: input.seasonYear || 2026,
     seasonCode: input.seasonCode ?? "SS",
+    purchaseMonth: input.type === "purchased" ? input.purchaseMonth || null : null,
     memo: input.memo || null,
     reminderAt: input.reminderAt ? new Date(input.reminderAt) : null,
   };
@@ -51,6 +53,7 @@ async function seedLocalItems() {
         price: 18700,
         seasonYear: 2026,
         seasonCode: "SS",
+        purchaseMonth: 5,
         memo: "白ワンピ枠。写真映えするので今季まとめの主役にする。",
       },
       {
@@ -62,6 +65,7 @@ async function seedLocalItems() {
         price: 16500,
         seasonYear: 2026,
         seasonCode: "SS",
+        purchaseMonth: 6,
         memo: "似た服を買いすぎないように記録。",
       },
       {
@@ -73,6 +77,7 @@ async function seedLocalItems() {
         price: 19800,
         seasonYear: 2025,
         seasonCode: "AW",
+        purchaseMonth: 11,
         memo: "秋冬の購入品まとめ用。",
       },
       {
