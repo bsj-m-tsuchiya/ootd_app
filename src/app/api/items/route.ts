@@ -14,6 +14,7 @@ type ItemInput = {
   purchaseMonth?: number | null;
   memo?: string;
   reminderAt?: string | null;
+  isBest?: boolean;
 };
 
 function normalizeItem(input: ItemInput) {
@@ -35,6 +36,7 @@ function normalizeItem(input: ItemInput) {
     purchaseMonth: input.type === "purchased" ? input.purchaseMonth || null : null,
     memo: input.memo || null,
     reminderAt: input.reminderAt ? new Date(input.reminderAt) : null,
+    isBest: Boolean(input.isBest),
   };
 }
 

@@ -1,0 +1,17 @@
+{
+  "name": "Kiroku — 購入品ログ",
+  "short_name": "Kiroku",
+  "description": "今季買った服と買う予定の服をかわいく残す購入品ログ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbf7f1",
+  "theme_color": "#f1ebe2",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

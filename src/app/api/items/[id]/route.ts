@@ -6,6 +6,8 @@ type Params = {
 };
 
 type ItemPatchInput = {
+  type?: "purchased" | "want";
+  isBest?: boolean;
   imagePath?: string | null;
   url?: string | null;
   brand?: string | null;
@@ -22,6 +24,8 @@ type ItemPatchInput = {
 function normalizePatch(input: ItemPatchInput) {
   const data: Record<string, unknown> = {};
 
+  if (input.type === "purchased" || input.type === "want") data.type = input.type;
+  if ("isBest" in input) data.isBest = Boolean(input.isBest);
   if ("imagePath" in input) data.imagePath = input.imagePath || null;
   if ("url" in input) data.url = input.url || null;
   if ("brand" in input) data.brand = input.brand || null;

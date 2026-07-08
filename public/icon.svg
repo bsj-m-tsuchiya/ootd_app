@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#f4efe7"/>
+  <rect x="24" y="24" width="464" height="464" rx="96" fill="none" stroke="#e0d6c8" stroke-width="4"/>
+  <text x="256" y="308" font-family="Cormorant Garamond, Times New Roman, serif" font-size="248" font-style="italic" font-weight="500" text-anchor="middle" fill="#26221d">K.</text>
+  <text x="256" y="404" font-family="Helvetica Neue, Arial, sans-serif" font-size="34" letter-spacing="18" text-anchor="middle" fill="#b6ac9f">KIROKU</text>
+</svg>
